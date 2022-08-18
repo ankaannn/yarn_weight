@@ -1,51 +1,81 @@
+import tkinter as tk
+from tkinter import ttk
+from tkinter import *
+
+# Root window
+window = tk.Tk()
+window.title('Yarn Weight')
+window.geometry('400x200')
+
+stitches = tk.StringVar()
+weight = tk.StringVar()
 
 
-def main():
-    stitches = reader()
-    yarn_weight(stitches)
+def get_answer():
+    stitches = int(label_answer.get())
+    weight = "\n" + yarn_weight(stitches)
+    output.config(state=NORMAL)
+    output.delete(1.0, END)
+    output.tag_config("center", justify="center")
+    output.insert(tk.END, weight)
+    output.tag_add("center", "1.0", "end")
+    output.config(state=DISABLED)
 
 
-def reader():
-    print("How many stitches in 4inch/10cm?")
-    stitches = int(input())
-    return stitches
+# Text label
+label_question = Label(window, text="How many stitches in 4inch/10cm?")
+label_question.pack(padx=10, pady=10)
+# Answer label
+label_answer = ttk.Entry(window, textvariable=stitches)
+label_answer.pack(padx=10, pady=10)
+label_answer.focus()
+# Show weight button
+button = tk.Button(window, text="Show yarn weight", command=get_answer)
+button.pack()
+# Yarn Weight text / output
+output = Text(window, height=3, width=40)
+output.pack(padx=10, pady=10)
 
 
+# function that decides the yarn weight
 def yarn_weight(stitches):
-    print("The yarn weight are:")
     if stitches <= 6:
-        print("Jumbo")
+        return "Jumbo"
     elif 7 <= stitches <= 12:
-        print("Super Bulky")
+        return "Super Bulky"
+    elif stitches == 13:
+        return "Between Super Bulky and Bulky"
     elif 14 <= stitches <= 15:
-        print("Bulky")
+        return "Bulky"
     elif 16 <= stitches <= 17:
-        print("Between Bulky and Aran")
+        return "Between Bulky and Aran"
     elif stitches == 18:
-        print("Aran")
+        return "Aran"
     elif stitches == 19:
-        print("Between Aran and Worsted")
+        return "Between Aran and Worsted"
     elif stitches == 20:
-        print("Worsted")
+        return "Worsted"
     elif stitches == 21:
-        print("Between Worsted and DK")
+        return "Between Worsted and DK"
     elif stitches == 22:
-        print("DK")
+        return "DK"
     elif stitches == 23:
-        print("Between DK and Sport")
+        return "Between DK and Sport"
     elif 24 <= stitches <= 26:
-        print("Sport")
+        return "Sport"
     elif stitches == 27:
-        print("Between Sport and Fingering")
+        return "Between Sport and Fingering"
     elif stitches == 28:
-        print("Fingering")
+        return "Fingering"
     elif 29 <= stitches <= 31:
-        print("Between Fingering and Light Fingering")
+        return "Between Fingering and Light Fingering"
     elif stitches == 32:
-        print("Light Fingering")
+        return "Light Fingering"
     elif 33 <= stitches <= 34:
-        print("Lace")
+        return "Lace"
     else:
-        print("No known weight")
+        return "Outside the range"
 
-main()
+
+window.mainloop()
+
